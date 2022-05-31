@@ -1,0 +1,91 @@
+{% extends 'main_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+	{% for data in companyDetails %}
+
+        {% for category in newsCategoryData %}
+
+           <!--Page Title-->
+           <section class="page-title" style="background-image: url({% static 'main_app/images/background/8.jpg' %});">
+               <div class="auto-container">
+                   <div class="title-outer">            
+                       <h1>{{category.category}}</h1>
+                       <ul class="page-breadcrumb">
+                           <li><a href="{% url 'mainAppNamespace:HomeName' %}">Accueil</a></li>
+                           <li>{{category.category}}</li>
+                       </ul>
+                   </div>
+               </div>
+           </section>
+           <!-- End Page Title -->
+
+           <!-- Blog Section -->
+            <section class="blog-section blog-three-col">
+                <div class="auto-container">
+                    <div class="row">
+
+                        {% for news in newsList %}
+
+                            <!-- News Block -->
+                            <div class="news-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
+                                <div class="inner-box">
+                                    <div class="image-box">
+                                        <figure class="image" style="height: 250px !important;"><a href="{% url 'mainAppNamespace:ArticleName' news.slug %}"><img src="{{news.image.url}}" alt=""></a></figure>
+                                        <a href="#" class="date">{{news.posted_on_date_time}}</a>
+                                    </div>
+                                    <div class="lower-content">
+                                        <h4><a href="{% url 'mainAppNamespace:ArticleName' news.slug %}"> {{news.title}} </a></h4>
+                                        <div class="text">{{news.news | safe | truncatechars:150}}</div>
+                                        <div class="post-info">
+                                            <div class="post-author">{{news.posted_by.first_name}} {{news.posted_by.last_name}}</div>
+                                            <ul class="post-option">
+                                                <!-- <li><a href="#">0 <i class="far fa-heart"></i></a></li> -->
+                                                <li><a href="#">{{news.number_of_comments}} <i class="far fa-comments"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                    {% if newsList.has_other_pages %}
+
+                        <!--Styled Pagination-->
+                        <ul class="styled-pagination" style="margin-bottom: 20px !important;">
+
+                            {% if newsList.has_previous %}
+                                <li><a href="?page={{ newsList.previous_page_number }}" class="arrow"><span class="flaticon-left"></span></a></li>
+                            {% endif %}
+
+                            {% for i in newsList.paginator.page_range %}
+                                {% if newsList.number == i %}
+                                    <li><a href="#" class="active">{{ i }}</a></li>
+                                {% else %}
+                                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}                            
+                                        
+                            {% if newsList.has_next %}
+                                <li><a href="?page={{ newsList.next_page_number }}" class="arrow"><span class="flaticon-right"></span></a></li>
+                            {% endif %}
+
+                        </ul>                
+                        <!--End Styled Pagination-->
+
+                    {% endif %}
+
+                </div>
+            </section>
+            <!--End Blog Section -->
+
+        {% endfor %}
+
+	{% endfor %}
+
+{% endblock %}

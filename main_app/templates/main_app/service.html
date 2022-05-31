@@ -1,0 +1,56 @@
+{% extends 'main_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+	{% for data in companyDetails %}
+
+        {% for service in requestedService %}
+
+           <!--Page Title-->
+           <section class="page-title" style="background-image: url({% static 'main_app/images/background/8.jpg' %});">
+               <div class="auto-container">
+                   <div class="title-outer">            
+                       <h1>Service</h1>
+                       <ul class="page-breadcrumb">
+                           <li><a href="{% url 'mainAppNamespace:HomeName' %}">Accueil</a></li>
+                           <li>Service</li>
+                       </ul>
+                   </div>
+               </div>
+           </section>
+           <!--End Page Title-->
+
+           <!-- Skill Section -->
+           <section class="skill-section">
+               <div class="outer-container clearfix">
+                   <div class="skill-column">
+                       <div class="inner-column">
+                           <div class="sec-title">
+                               <!-- <span class="sub-title">PRESENTATION</span> -->
+                               <h2> {{service.title}} </h2>
+                               <span class="divider"></span>
+                               <div class="text">
+                                  {{service.description | safe}}
+                                  <div class="btn-box" style="margin-top: 25px;">
+                                    <a href="{% url 'mainAppNamespace:RequestForAppointmentName' %}?object=Prendre rendez-vous pour {{service.title}}" class="theme-btn btn-style-three"><span class="btn-title">Prendre Rendez-vous</span></a>
+                                </div>
+                               </div>
+                           </div>
+
+                       </div>
+                   </div>
+
+                   <div class="image-column">
+                      <img src="{{service.image.url}}" alt="">
+                   </div>
+               </div>
+           </section>
+           <!--End Skill Section -->
+
+        {% endfor %}
+
+	{% endfor %}
+
+{% endblock %}

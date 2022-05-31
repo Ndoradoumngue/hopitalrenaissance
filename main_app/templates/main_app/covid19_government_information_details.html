@@ -1,0 +1,54 @@
+{% extends 'main_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+	{% for data in companyDetails %}
+
+        {% for information in requestedCovid19GovernmentInformation %}
+
+           <!--Page Title-->
+           <section class="page-title" style="background-image: url({% static 'main_app/images/background/8.jpg' %});">
+               <div class="auto-container">
+                   <div class="title-outer">            
+                       <h1>Covid-19 Informations Gouvernementales</h1>
+                       <ul class="page-breadcrumb">
+                           <li><a href="{% url 'mainAppNamespace:HomeName' %}">Accueil</a></li>
+                           <li><a href="{% url 'mainAppNamespace:Covid19GovernmentInformationName' %}">Covid-19 Informations Gouvernementales</a></li>
+                           <li>{{information.title}}</li>
+                       </ul>
+                   </div>
+               </div>
+           </section>
+           <!--End Page Title-->
+
+           <!-- Skill Section -->
+           <section class="skill-section">
+               <div class="outer-container clearfix">
+                   <div class="skill-column" style="width: 100% !important;">
+
+                        <img src="{{information.image.url}}" alt="">
+
+                       <div class="inner-column">
+                           <div class="sec-title">
+                               <!-- <span class="sub-title">PRESENTATION</span> -->
+                               <h2> {{information.title}} </h2>
+                               <span class="divider"></span>
+                               <div class="text">
+                                  {{information.description | safe}}
+                               </div>
+                           </div>
+
+                       </div>
+                   </div>
+
+               </div>
+           </section>
+           <!--End Skill Section -->
+
+        {% endfor %}
+
+	{% endfor %}
+
+{% endblock %}

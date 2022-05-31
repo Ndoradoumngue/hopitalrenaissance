@@ -1,0 +1,47 @@
+{% extends 'main_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+	{% for data in companyDetails %}
+
+       <!--Page Title-->
+       <section class="page-title" style="background-image: url({% static 'main_app/images/background/8.jpg' %});">
+           <div class="auto-container">
+               <div class="title-outer">            
+                   <h1>Historique</h1>
+                   <ul class="page-breadcrumb">
+                       <li><a href="{% url 'mainAppNamespace:HomeName' %}">Accueil</a></li>
+                       <li>Historique</li>
+                   </ul>
+               </div>
+           </div>
+       </section>
+       <!--End Page Title-->
+
+       <!-- Skill Section -->
+       <section class="skill-section">
+           <div class="outer-container clearfix">
+               <div class="skill-column">
+                   <div class="inner-column">
+                       <div class="sec-title">
+                           <!-- <span class="sub-title">PRESENTATION</span>
+                           <h2> Centre Hospitalier Universitaire la Renaissance</h2> -->
+                           <span class="divider"></span>
+                           <div class="text">{{data.historique | safe}}</div>
+                       </div>
+
+                   </div>
+               </div>
+
+               <div class="image-column">
+                  <img src="{{data.historique_image.url}}" alt="">
+               </div>
+           </div>
+       </section>
+       <!--End Skill Section -->
+
+	{% endfor %}
+
+{% endblock %}

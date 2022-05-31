@@ -1,0 +1,198 @@
+{% extends 'main_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+	{% for data in companyDetails %}
+
+        {% for article in requestedArticle %}
+
+           <!--Page Title-->
+           <section class="page-title" style="background-image: url({% static 'main_app/images/background/8.jpg' %});">
+               <div class="auto-container">
+                   <div class="title-outer">            
+                       <h1>Article</h1>
+                       <ul class="page-breadcrumb">
+                           <li><a href="{% url 'mainAppNamespace:HomeName' %}">Accueil</a></li>
+                           <li><a href="{% url 'mainAppNamespace:MediaName' article.category.slug %}">Média</a></li>
+                           <li>{{article.title}}</li>
+                       </ul>
+                   </div>
+               </div>
+           </section>
+           <!--End Page Title-->
+
+           <!-- Sidebar Page Container -->
+            <div class="sidebar-page-container">
+                <div class="auto-container">
+                    <div class="row clearfix">
+                        <!--Content Side-->
+                        <div class="content-side col-lg-8 col-md-12 col-sm-12">
+                            <div class="blog-post">
+                                <!-- News Block -->
+                                <div class="news-block">
+                                    <div class="inner-box">
+                                        <div class="image"><img src="{{article.image.url}}" alt="" /></div>
+                                        <div class="lower-content">
+                                            <ul class="post-info">
+                                                <li><span class="far fa-user"></span> {{article.posted_by.first_name}} {{article.posted_by.last_name}}</li>
+                                                <li><span class="far fa-comments"></span>{{article.number_of_comments}} Commentaires</li>
+                                                <li><span class="far fa-calendar"></span> {{article.posted_on_date_time}}</li>
+                                            </ul>
+                                            <h3>{{article.title}}</h3>
+                                            {{article.news | safe}}
+                                        </div>
+                                    </div>
+                                </div>
+            
+                               <!-- Other Options -->
+                                <div class="post-share-options clearfix">
+                                    <!-- <ul class="tags pull-left">
+                                        <li><a href="#">Cars</a></li>
+                                        <li><a href="#">Engines</a></li>
+                                        <li><a href="#">Auto</a></li>
+                                        <li><a href="#">Break</a></li>
+                                    </ul> -->
+
+                                    <ul class="social-icon pull-right">
+                                        <p style="font-weight: bold; margin-bottom: 5px;">Partager: </p>
+                                        <li><a href="http://www.facebook.com/share.php?u=<url>" style="background-color: #4267B2; color: #fff;"><span class="fa fa-facebook"></span></a></li>
+                                        <li><a href="http://twitter.com/home?status={{article.title}} {{currentURL}}" style="background-color: #1DA1F2; color: #fff;"><span class="fab fa-twitter"></span></a></li>
+                                        <li><a href="whatsapp://send?text={{article.short_description}}" style="background-color: #128C7E; color: #fff;"><span class="fab fa-whatsapp"></span></a></li>
+                                        <li><a href="http://www.linkedin.com/shareArticle?mini=true&url={{currentURL}}" style="background-color: #0072b1; color: #fff;"><span class="fab fa-linkedin-in"></span></a></li>
+                                        <!-- <li><a href="#"><span class="fab fa-dribbble"></span></a></li> -->
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                            <!-- Author Box -->
+                            <!-- <div class="author-box">
+                                <div class="inner-box clearfix">
+                                    <div class="thumb"><img src="images/resource/author-thumb.jpg" alt=""></div>
+                                    <span class="title">Author</span>
+                                    <h4 class="name">Robert Theodore</h4>
+                                    <div class="text">Dynamically innovate resource and leveling customer service for state of the art customer service circumstances occur.</div>
+                                    <ul class="social-icon-one">
+                                        <li><a href="#"><span class="fab fa-facebook"></span></a></li>
+                                        <li><a href="#"><span class="fab fa-twitter"></span></a></li>
+                                        <li><a href="#"><span class="fab fa-whatsapp"></span></a></li>
+                                        <li><a href="#"><span class="fab fa-linkedin-in"></span></a></li>
+                                        <li><a href="#"><span class="fab fa-dribbble"></span></a></li>
+                                    </ul>
+                                </div>
+                            </div> -->
+
+                            <!-- Comments Area -->
+                            <div class="comments-area">
+                                <div class="group-title">
+                                    <h3 style="font-size: 20px !important;">{{article.number_of_comments}} Commentaires</h3>
+                                </div>
+
+                                {% for comment in requestedArticleComments %}
+                                
+                                    <div class="comment-box">
+                                        <div class="comment">
+                                            <div class="author-thumb">
+                                                {% if comment.commented_by.profile_image %}
+                                                    <img src="{{comment.commented_by.profile_image.url}}" alt="">
+                                                {% else %}
+                                                    <img src="{% static 'main_app/images/user.png' %}" alt="">
+                                                {% endif %}
+                                            </div> 
+                                            <div class="comment-info">
+                                                <div class="name">{{comment.commented_by.first_name}} {{comment.commented_by.last_name}}</div>
+                                                <div class="date">{{comment.added_on_date_time}}</div>
+                                            </div> 
+                                            <div class="text">{{comment.comment}}</div>
+                                            <!-- <a href="#" class="reply-btn">Reply</a> -->
+                                        </div>
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                            <!--Comment Form-->
+                            <div class="comment-form">
+                                <div class="group-title">
+                                    <h3 style="font-size: 20px !important;">Commenter </h3>
+                                </div>
+                                <form method="post" action="{% url 'mainAppNamespace:CommentNewsName' article.slug %}"> 
+                                    {% csrf_token %}
+                                    <div class="row clearfix">
+
+                                        <!-- <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+                                            <input type="text" name="username" placeholder="Name" required="">
+                                        </div>
+                                        
+                                        <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+                                            <input type="email" name="email" placeholder="Email" required="">
+                                        </div> -->
+
+                                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                            <textarea name="comment" placeholder="Votre Commentaire" required=""></textarea>
+                                        </div>
+                                        
+                                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                            <button class="theme-btn btn-style-one" type="submit" name="submit-form"><span class="btn-title">Poster</span></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!--Sidebar Side-->
+                        <div class="sidebar-side col-lg-4 col-md-12 col-sm-12">
+                            <aside class="sidebar">
+                                <!--search box-->
+                                <!-- <div class="sidebar-widget search-box">
+                                    <form method="post" action="">
+                                        <div class="form-group">
+                                            <input type="search" name="search-field" value="" placeholder="Search....." required="">
+                                            <button type="submit"><span class="icon fa fa-search"></span></button>
+                                        </div>
+                                    </form>
+                                </div> -->
+
+                                <!-- Categories -->
+                                <div class="sidebar-widget category-list">
+                                    <div class="sidebar-title"><h3>Catégories</h3></div>
+                                    <ul class="cat-list">
+                                        {% for category in newsCategoriesList %}
+                                            <li><a href="{% url 'mainAppNamespace:MediaName' category.slug %}">{{category.category}} <!-- <span>(06)</span> --></a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
+                                <!-- Latest News -->
+                                <div class="sidebar-widget latest-news">
+                                    <div class="sidebar-title"><h3>Articles récents</h3></div>
+                                    <div class="widget-content">
+
+                                        {% for news in lattestNewsList %}
+
+                                            <article class="post">
+                                                <div class="post-thumb"><a href="{% url 'mainAppNamespace:ArticleName' news.slug %}"><img src="{{news.image.url}}" alt=""></a></div>
+                                                <h5><a href="{% url 'mainAppNamespace:ArticleName' news.slug %}">{{news.title}}</a></h5>
+                                                <div class="post-info">{{news.posted_on_date_time}}</div>
+                                            </article>
+
+                                        {% endfor %}
+
+                                    </div>
+                                </div>
+
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Sidebar Container -->
+
+        {% endfor %}
+
+	{% endfor %}
+
+{% endblock %}

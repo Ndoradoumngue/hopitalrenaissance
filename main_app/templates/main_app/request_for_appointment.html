@@ -1,0 +1,93 @@
+{% extends 'main_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+   {% for data in companyDetails %}
+
+       <!--Page Title-->
+       <section class="page-title" style="background-image: url({% static 'main_app/images/background/8.jpg' %});">
+           <div class="auto-container">
+               <div class="title-outer">            
+                   <h1>Prendre rendez-vous</h1>
+                   <ul class="page-breadcrumb">
+                       <li><a href="{% url 'mainAppNamespace:HomeName' %}">Accueil</a></li>
+                       <li>Prendre rendez-vous</li>
+                   </ul>
+               </div>
+           </div>
+       </section>
+       <!--End Page Title-->
+
+       <!-- Appointment Section Two -->
+        <section class="appointment-section-two" style="background-image: url(images/background/7.jpg);">
+            <div class="outer-box">
+                <div class="auto-container">
+                    <div class="row">
+                        <!-- Testimonial Column -->
+                        <div class="testimonial-column col-lg-4 col-md-12 col-sm-12">
+                            <div class="inner-column">
+
+                                <div class="content">
+                                    <h4 style="color: #fff; font-size: 20px; font-weight: 600; display: block; margin-top: 10px;">Prendre rendez-vous</h4>
+                                    <div style="border: 2px dashed #fff; padding: 20px; margin-top: 20px;">
+                                        <p style="color: #ffffff; font-size: 16px; line-height: 1.8em; font-weight: 300;">
+                                            N'hésitez pas à contacter notre sympathique personnel de réception pour tout rendez-vous avec un médecin généraliste ou un de nos spécialistes. 
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Form Column -->
+                        <div class="form-column col-lg-8 col-md-12 col-sm-12">
+                            <div class="inner-column">
+                                <div class="appointment-form default-form">
+                                    <div class="sec-title"> 
+                                        <!-- <span class="sub-title">Online Appoinment</span> -->
+                                        <h2>Formulaire de rendez-vous </h2>
+                                        <span class="divider"></span>
+                                    </div>
+
+                                    <!--Comment Form-->
+                                    <form action="{% url 'mainAppNamespace:SendAppointmentRequestName' %}" method="post">
+                                        {% csrf_token %}
+
+                                        <div class="form-group">
+                                            <input type="text" name="full_name" placeholder="Noms *" required="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="email" name="email" placeholder="Addresse Email *" required="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="text" name="phone" placeholder="Numéro de Téléphone *" required="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="text" name="subject" value="{{subject}}" placeholder="Objet *" required="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <textarea name="message" placeholder="Message *" required=""></textarea>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <button class="theme-btn btn-style-one bg-dodgerblue" type="submit"><span class="btn-title">Envoyer</span></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Appointment Section Two -->
+
+   {% endfor %}
+
+{% endblock %}

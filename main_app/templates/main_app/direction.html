@@ -1,0 +1,61 @@
+{% extends 'main_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+	{% for data in companyDetails %}
+
+        {% for direction in requestedDirection %}
+
+           <!--Page Title-->
+           <section class="page-title" style="background-image: url({% static 'main_app/images/background/8.jpg' %});">
+               <div class="auto-container">
+                   <div class="title-outer">            
+                       <h1>Direction</h1>
+                       <ul class="page-breadcrumb">
+                           <li><a href="{% url 'mainAppNamespace:HomeName' %}">Accueil</a></li>
+                           <li><a href="{% url 'mainAppNamespace:DirectionsName' %}">Directions</a></li>
+                           <li>{{direction.name}}</li>
+                       </ul>
+                   </div>
+               </div>
+           </section>
+           <!--End Page Title-->
+
+           <!-- Skill Section -->
+           <section class="skill-section">
+               <div class="outer-container clearfix">
+                   <div class="skill-column">
+                       <div class="inner-column">
+                           <div class="sec-title">
+                               <!-- <span class="sub-title">PRESENTATION</span> -->
+                               <h2> {{direction.name}} </h2>
+                               <span class="divider"></span>
+                               <div class="text">
+                                  {{direction.description | safe}}<br/>
+                                  <p>
+                                    <b>Directeur(trice):</b> &nbsp; {{direction.director.first_name}} {{direction.director.last_name}}<br/>
+
+                                    {% if direction.deputy_director %}
+                                        <b>Directeur(trice) Adjoint(e):</b> &nbsp; {{direction.deputy_director.first_name}} {{direction.deputy_director.last_name}}
+                                    {% endif %}
+                                 </p>
+                               </div>
+                           </div>
+
+                       </div>
+                   </div>
+
+                   <div class="image-column">
+                      <img src="{{direction.image.url}}" alt="">
+                   </div>
+               </div>
+           </section>
+           <!--End Skill Section -->
+
+        {% endfor %}
+
+	{% endfor %}
+
+{% endblock %}

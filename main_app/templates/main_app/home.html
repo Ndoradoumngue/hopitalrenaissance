@@ -1,0 +1,300 @@
+{% extends 'main_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+	{% for data in companyDetails %}
+
+		<!-- Bnner Section -->
+	    <section class="banner-section">
+	        <div class="banner-carousel owl-carousel owl-theme default-arrows dark">
+
+	        		{% for slider in homeSliders %}
+
+		            <!-- Slide Item -->
+		            <div class="slide-item" style="background-image: url({{slider.image.url}});">
+		                <div class="auto-container">
+		                    <div class="content-outer">
+		                        <div class="content-box">
+		                            <!-- <span class="title">Welcome Our Hospital</span> -->
+		                            <h2>{{slider.title}}</h2>
+		                            <div class="text">{{slider.sub_title}}</div>
+		                            <div class="btn-box"><a href="{% url 'mainAppNamespace:AboutUsName' %}" class="theme-btn btn-style-one bg-tealblue"><span class="btn-title">A Propos</span></a></div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+
+	            {% endfor %}
+
+	        </div>
+
+	        <!-- Top Features -->
+	        <div class="top-features">
+	            <div class="auto-container">
+	                <div class="outer-box">
+	                    <div class="row">
+
+	                        <!-- Feature Block Two -->
+	                        <div class="feature-block-four col-lg-4 col-md-6 col-sm-12">
+	                            <div class="inner-box">
+	                                <span class="flaticon-call-1" style="font-size: 2rem; font-weight: bold; color: #0a53a0;"></span>
+	                                <h4 style="margin-top: 10px;">urgence</h4>
+	                                <div class="text">En cas d'urgence n'hésitez pas à nous contacter.</div>
+	                            </div>
+	                        </div>
+
+	                        <!-- Feature Block Two -->
+	                        <div class="feature-block-four col-lg-4 col-md-6 col-sm-12">
+	                            <div class="inner-box">
+	                                <span class="fa fa-calendar" style="font-size: 2rem; font-weight: bold; color: #0a53a0;"></span>
+	                                <h4 style="margin-top: 10px;">Disponibilité</h4>
+	                                <div class="text">
+	                                		Veuillez consulter la plage horaire des Médecins.
+	                             	  </div>
+	                            </div>
+	                        </div>
+
+	                        <!-- Feature Block Two -->
+	                        <div class="feature-block-four col-lg-4 col-md-6 col-sm-12">
+	                            <div class="inner-box">
+	                                <span class="fa fa-clock-o" style="font-size: 2rem; font-weight: bold; color: #0a53a0;"></span>
+	                                <h4 style="margin-top: 10px;">Heures d'ouvertures</h4>
+	                                <div class="text">
+	                                		Lundi - Vendredi 8.00 - 7:00 pm<br/>
+	                                		Samedi 9.00 - 10:00 pm
+	                                		<!-- <br/>
+	                                		Dimanche 10.00 - 12:00 pm -->
+	                                	</div>
+	                            </div>
+	                        </div>
+
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	        <!-- End Top Features -->
+
+	    </section>
+	    <!-- End Bnner Section -->
+
+	    <!-- About Section Three -->
+	    <section class="about-section-three">
+	        <div class="auto-container">
+	            <div class="row">
+	                <!-- Content Column -->
+	                <div class="content-column col-lg-5 col-md-12 col-sm-12 order-2">
+	                    <div class="inner-column">
+	                        <div class="sec-title">
+	                            <!-- <span class="sub-title">How We Get to This Point</span> -->
+	                            <h2>Qui sommes-nous?</h2>
+	                            <span class="divider"></span>
+	                            {{data.company_description | safe | truncatechars:500}}
+	                            <div class="btn-box" style="margin-top: 25px;">
+	                            	<a href="{% url 'mainAppNamespace:AboutUsName' %}" class="theme-btn btn-style-three"><span class="btn-title">Lire Plus</span></a>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+
+	                <!-- Images Column -->
+	                <div class="image-column col-lg-7 col-md-12 col-sm-12">
+	                    <div class="image-box">
+	                        <figure class="image"><img src="{{data.about_image.url}} " alt=""></figure>
+	                    </div>
+	                </div>
+
+	            </div>
+	        </div>
+	    </section>
+	    <!-- End About Section Three -->
+
+	    <!-- Fun Fact Section Two-->
+	    <section class="fun-fact-section-two">
+	        <div class="auto-container">
+	            <div class="row">
+
+	                <!--Column-->
+	                <div class="counter-column col-lg-3 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="400ms">
+	                    <div class="count-box">
+	                        <div class="icon-box"><span class="icon flaticon-doctor"></span></div>
+	                        <h4 class="counter-title">Médecins</h4>
+	                        <span class="count-text" data-speed="3000" data-stop="{{data.number_of_doctors}}">0</span>
+	                    </div>
+	                </div>
+
+	                <!--Column-->
+	                <div class="counter-column col-lg-3 col-md-6 col-sm-12 wow fadeInUp">
+	                    <div class="count-box">
+	                        <div class="icon-box"><span class="icon flaticon-surgery-room"></span></div>
+	                        <h4 class="counter-title">Lits</h4>
+	                        <span class="count-text" data-speed="3000" data-stop="{{data.number_of_beds}}">0</span>
+	                    </div>
+	                </div>
+
+	                <!--Column-->
+	                <div class="counter-column col-lg-3 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="800ms">
+	                    <div class="count-box">
+	                        <div class="icon-box"><span class="icon flaticon-hospital"></span></div>
+	                        <h4 class="counter-title">Hospitalisations</h4>
+	                        <span class="count-text" data-speed="3000" data-stop="{{data.number_of_internal_patients}}">0</span>
+	                    </div>
+	                </div>
+
+	                <!--Column-->
+	                <div class="counter-column col-lg-3 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="1200ms">
+	                    <div class="count-box">
+	                        <div class="icon-box"><span class="icon flaticon-team"></span></div>
+	                        <h4 class="counter-title">Paramédicaux</h4>
+	                        <span class="count-text" data-speed="3000" data-stop="{{data.number_of_paramedics}}">0</span>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </section>
+	    <!-- Fun Fact Section Two -->
+
+	    <!-- Services Section -->
+	    <section class="services-section-two">
+	        <div class="auto-container">
+	            <div class="sec-title text-center">
+	            	<br/><br/>
+	                <span class="sub-title">NOS DEPARTEMENTS</span>
+	                <h2>Nos Services</h2>
+	                <span class="divider"></span>
+	            </div>
+
+	            <div class="carousel-outer">
+	                <!-- Services Carousel -->
+	                <div class="services-carousel owl-carousel owl-theme">
+
+	                	{% for service in ourServicesList %}
+
+	                    <!-- service Block -->
+	                    <div class="service-block-two">
+	                        <div class="inner-box">
+	                            <div class="image-box">
+	                                <figure class="image"><a href="{% url 'mainAppNamespace:ServiceName' service.slug %}"><img src="{{service.image.url}}" alt=""></a></figure>
+	                            </div>
+	                            <div class="lower-content">
+	                                <div class="title-box">
+	                                    <!-- <span class="icon flaticon-heart-2"></span> -->
+	                                    <h4><a href="{% url 'mainAppNamespace:ServiceName' service.slug %}">{{service.title}}</a></h4> 
+	                                </div>
+	                                <!-- <div class="text">Introduction. Cardiology is the study heart conditions. The Consultant with whom you have an appointment is a specialist.</div>
+	                                <span class="icon-right flaticon-heart-2"></span> -->
+	                            </div>
+	                        </div>
+	                    </div>
+
+	                  {% endfor %}
+
+	                </div>
+	            </div>
+
+	        </div>
+	    </section>
+	    <!-- End service Section -->
+
+	    <!-- Portfolio Section -->
+	    <section class="portfolio-section">
+	        <div class="auto-container">
+	            <div class="row">
+	                <div class="col-lg-6">
+	                    <div class="sec-title">
+	                        <span class="sub-title">Gallerie</span>
+	                        <h2>L'hôpital La Renaissance en images</h2>
+	                        <span class="divider"></span>
+	                    </div>
+	                </div>
+	            </div>
+
+	            <!--MixitUp Galery-->
+	            <div class="mixitup-gallery">
+	                
+	                <div class="btns-outer">
+	                    <a href="{% url 'mainAppNamespace:OurGalleryName' %}" class="theme-btn btn-style-one"><span class="btn-title">Voir Tout</span></a>
+	                    <!--Filter-->
+	                    <ul class="filter-tabs filter-btns clearfix">
+	                        <li class="filter active" data-role="button" data-filter="all">Tout</li>
+	                        {% for category in galleryGategories %}
+	                        	<li class="filter" data-role="button" data-filter=".{{category.slug}}">{{category.category}}</li>
+	                        {% endfor %}
+	                    </ul>                           
+	                </div>
+
+	                <div class="filter-list row mid-spacing">
+
+	                	{% for gallery in ourGallery %}
+
+	                    <!-- Portfolio Block -->
+	                    <div class="portfolio-block all mix {{gallery.category.slug}} col-lg-4 col-md-6 col-sm-12">
+	                        <div class="image-box">
+	                            <figure class="image" style="height: 250px !important;"><img src="{{gallery.image.url}}" alt=""></figure>
+	                            <div class="overlay">
+	                                <a href="{{gallery.image.url}}" class="icon-box lightbox-image"><span class="fa fa-expand"></span></a>
+	                                <div class="title-box">
+	                                    <h5>{{gallery.title}}</h5>
+	                                    <div class="cat">
+	                                        <a href="#">{{gallery.category.category}}</a>
+	                                        <!-- <a href="#">Pharmacy</a>, -->
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+
+	                  {% endfor %}
+
+	                </div>
+	            </div>
+	        </div>
+	    </section>
+	    <!-- End Portfolio Section -->
+	    
+	    <!-- News Section Two -->
+	    <section class="news-section-two">
+	        <div class="auto-container">
+	            <!-- Sec Title -->
+	            <div class="sec-title">
+	                <span class="title">News</span>
+	                <h2>Articles récents</h2>
+	                <span class="divider"></span>
+	            </div>
+
+	            <div class="row">
+
+	            	{% for news in ourNewsList %}
+
+		                <!-- News Block -->
+		                <div class="news-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
+		                    <div class="inner-box">
+		                        <div class="image-box" style="height: 200px !important;">
+		                            <figure class="image"><a href="{% url 'mainAppNamespace:ArticleName' news.slug %}"><img src="{{news.image.url}}" alt=""></a></figure>
+		                            <a href="#" class="date">{{news.posted_on_date_time}}</a>
+		                        </div>
+		                        <div class="lower-content">
+		                            <h4><a href="{% url 'mainAppNamespace:ArticleName' news.slug %}">{{news.title}}</a></h4>
+		                            <div class="text">{{news.short_description}}...</div>
+		                            <div class="post-info">
+		                                <div class="post-author">{{news.posted_by.first_name}} {{news.posted_by.last_name}}</div>
+		                                <ul class="post-option">
+		                                    <!-- <li><a href="#">0 <i class="far fa-heart"></i></a></li> -->
+		                                    <li><a href="#">{{news.number_of_comments}} <i class="far fa-comments"></i></a></li>
+		                                </ul>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+
+	                {% endfor %}
+
+	            </div>
+	        </div>
+	    </section>
+	    <!--End News Section Two -->
+
+	{% endfor %}
+
+{% endblock %}

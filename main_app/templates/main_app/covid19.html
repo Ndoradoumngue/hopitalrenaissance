@@ -1,0 +1,94 @@
+{% extends 'main_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+	{% for data in companyDetails %}
+
+       <!--Page Title-->
+       <section class="page-title" style="background-image: url({% static 'main_app/images/background/8.jpg' %});">
+           <div class="auto-container">
+               <div class="title-outer">            
+                   <h1>Covid-19</h1>
+                   <ul class="page-breadcrumb">
+                       <li><a href="{% url 'mainAppNamespace:HomeName' %}">Accueil</a></li>
+                       <li>Covid-19</li>
+                   </ul>
+               </div>
+           </div>
+       </section>
+       <!--End Page Title-->
+
+       <!-- Elements -->
+        <section class="content-elements bg_alice" style="margin-top: -20px !important;">
+            <div class="auto-container">
+
+                <div class="row mb-5">
+                    <div class="column col-lg-12 col-md-12 col-sm-12">
+
+                        {% for information in covid19PresentationInformation %}
+
+                            {% if information.file %}
+
+                                <div style="text-align: center;">
+
+                                    {% if information.is_image == True or information.is_image == true or information.is_image == 'True' or information.is_image == 'true' %}
+                                        <img style="width: 50%;" src="{{information.file.url}}">
+                                    {% else %}
+                                        <video controls width="50%">
+                                            <source src="{{information.file.url}}" type="video/mp4">
+                                            Désolé, votre navigateur ne prend pas en charge les vidéos intégrées.
+                                        </video>
+                                    {% endif %}
+
+                                </div>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+                        <!--Accordian Box-->
+                        <ul class="accordion-box" style="margin-top: 20px !important;">
+
+                            {% for information in covid19InformationsList %}
+
+                                <!--Block-->
+                                <li class="accordion block">
+                                    <div class="acc-btn"> {{information.title}} <span class="icon fa fa-chevron-down"></span></div>
+                                    <div class="acc-content">
+                                        <div class="content">
+
+                                            {% if information.file %}
+
+                                                {% if information.is_image == True or information.is_image == true or information.is_image == 'True' or information.is_image == 'true' %}
+                                                    <img src="{{information.file.url}}">
+                                                {% else %}
+                                                    <video controls width="100%">
+                                                        <source src="{{information.file.url}}" type="video/mp4">
+                                                        Désolé, votre navigateur ne prend pas en charge les vidéos intégrées.
+                                                    </video>
+                                                {% endif %}
+
+                                            {% endif %}
+
+                                            <p>{{information.description | safe}}</p>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+
+                </div>
+                <hr class="divider-one">
+                <!--End Accordion -->
+
+            </div>
+        </section>
+
+	{% endfor %}
+
+{% endblock %}

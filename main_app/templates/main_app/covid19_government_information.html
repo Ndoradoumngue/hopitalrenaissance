@@ -1,0 +1,85 @@
+{% extends 'main_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+	{% for data in companyDetails %}
+
+       <!--Page Title-->
+       <section class="page-title" style="background-image: url({% static 'main_app/images/background/8.jpg' %});">
+           <div class="auto-container">
+               <div class="title-outer">            
+                   <h1>Covid-19 Informations Gouvernementales</h1>
+                   <ul class="page-breadcrumb">
+                       <li><a href="{% url 'mainAppNamespace:HomeName' %}">Accueil</a></li>
+                       <li>Covid-19 Informations Gouvernementales</li>
+                   </ul>
+               </div>
+           </div>
+       </section>
+       <!--End Page Title-->
+
+       <!-- Blog Section -->
+        <section class="blog-section blog-checkerboard">
+            <div class="auto-container">
+
+                {% for information in covid19GovernmentInformationsList %}
+
+                    <!-- News Block -->
+                    <div class="news-block-three">
+                        <div class="inner-box">
+                            <div class="image-box">
+                                <figure class="image"><a href="{% url 'mainAppNamespace:Covid19GovernmentInformationDetailsName' information.slug %}"><img src="{{information.image.url}}" alt=""></a></figure>
+                                <!-- <a href="#" class="date">June 9, 2020</a> -->
+                            </div>
+                            <div class="content-box">
+                                <h4><a href="blog-post-image.html">{{information.title}}</a></h4>
+                                <div class="text">{{information.short_description}} ...</div>
+                                <a href="{% url 'mainAppNamespace:Covid19GovernmentInformationDetailsName' information.slug %}" class="theme-btn btn-style-one read-more"><span class="btn-title">Lire Plus</span></a>
+                                <!-- <div class="post-info">
+                                    <div class="post-author">By <a href="#">Admin Rose</a></div>
+                                    <ul class="post-option">
+                                        <li><a href="#">0 <i class="far fa-heart"></i></a></li>
+                                        <li><a href="#">0 <i class="far fa-comments"></i></a></li>
+                                    </ul>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+                {% if covid19GovernmentInformationsList.has_other_pages %}
+
+                    <!--Styled Pagination-->
+                    <ul class="styled-pagination" style="margin-bottom: 20px !important;">
+
+                        {% if covid19GovernmentInformationsList.has_previous %}
+                            <li><a href="?page={{ covid19GovernmentInformationsList.previous_page_number }}" class="arrow"><span class="flaticon-left"></span></a></li>
+                        {% endif %}
+
+                        {% for i in covid19GovernmentInformationsList.paginator.page_range %}
+                          {% if covid19GovernmentInformationsList.number == i %}
+                            <li><a href="#" class="active">{{ i }}</a></li>
+                          {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                          {% endif %}
+                        {% endfor %}                            
+                            
+                        {% if covid19GovernmentInformationsList.has_next %}
+                            <li><a href="?page={{ covid19GovernmentInformationsList.next_page_number }}" class="arrow"><span class="flaticon-right"></span></a></li>
+                        {% endif %}
+
+                    </ul>                
+                    <!--End Styled Pagination-->
+
+                {% endif %}
+
+            </div>
+        </section>
+        <!--End Blog Section -->
+
+	{% endfor %}
+
+{% endblock %}

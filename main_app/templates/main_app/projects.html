@@ -1,0 +1,85 @@
+{% extends 'main_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+	{% for data in companyDetails %}
+
+       <!--Page Title-->
+       <section class="page-title" style="background-image: url({% static 'main_app/images/background/8.jpg' %});">
+           <div class="auto-container">
+               <div class="title-outer">            
+                   <h1>Nos Projets</h1>
+                   <ul class="page-breadcrumb">
+                       <li><a href="{% url 'mainAppNamespace:HomeName' %}">Accueil</a></li>
+                       <li>Projets</li>
+                   </ul>
+               </div>
+           </div>
+       </section>
+       <!-- End Page Title -->
+
+        <!-- Services Section -->
+        <section class="services-section-two">
+            <div class="auto-container">
+
+                <div class="carousel-outer" style="margin-top: 30px !important; margin-bottom: 20px !important;">
+                    <div class="row">
+
+                        {% for project in ourProjects %}
+
+                            <!-- service Block -->
+                            <div class="service-block-two col-lg-4 col-md-6 col-sm-12">
+                                <div class="inner-box">
+                                    <div class="image-box">
+                                        <figure class="image" style="height: 250px !important;"><a href="{% url 'mainAppNamespace:ProjectName' project.slug %}"><img src="{{project.image.url}}" alt=""></a></figure>
+                                    </div>
+                                    <div class="lower-content">
+                                        <div class="title-box">
+                                            <h4><a href="{% url 'mainAppNamespace:ProjectName' project.slug %}">{{project.title}}</a></h4> 
+                                        </div>
+                                        <div class="text" style="padding-bottom: 10px !important;">{{project.description | safe | truncatechars:150}}</div>
+                                        <span class="icon-right flaticon-heart-2"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                    {% if ourProjects.has_other_pages %}
+
+                        <!--Styled Pagination-->
+                        <ul class="styled-pagination" style="margin-bottom: 20px !important;">
+
+                            {% if ourProjects.has_previous %}
+                                <li><a href="?page={{ ourProjects.previous_page_number }}" class="arrow"><span class="flaticon-left"></span></a></li>
+                            {% endif %}
+
+                            {% for i in ourProjects.paginator.page_range %}
+                              {% if ourProjects.number == i %}
+                                <li><a href="#" class="active">{{ i }}</a></li>
+                              {% else %}
+                                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                              {% endif %}
+                            {% endfor %}                            
+                            
+                            {% if ourProjects.has_next %}
+                                <li><a href="?page={{ ourProjects.next_page_number }}" class="arrow"><span class="flaticon-right"></span></a></li>
+                            {% endif %}
+
+                        </ul>                
+                        <!--End Styled Pagination-->
+
+                    {% endif %}
+
+                </div>
+            </div>
+        </section>
+        <!-- End service Section -->
+
+	{% endfor %}
+
+{% endblock %}

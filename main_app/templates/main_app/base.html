@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    {% load static %}
+
+    <!-- Responsive -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js' %}"></script><![endif]-->
+    <!--[if lt IE 9]><script src="{% static 'main_app/js/respond.js' %}"></script><![endif]-->
+
+    <meta charset="UTF-8">
+    <meta name="author-name" content="Bakuri Technologies">
+    <meta name="author-email" content="contact@bakuritechnologies.com">
+    <meta name="author-profile" content="https://bakuritechnologies.com">
+    <meta name="description" content="{{pageDescription}}">
+    <meta name="keywords" content="{{pageKeywords}}">
+
+    <title>{{title}}</title>    
+
+    <!-- Stylesheets -->
+    <link href="{% static 'main_app/css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'main_app/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'main_app/css/responsive.css' %}" rel="stylesheet">
+    <link href="{% static 'main_app/css/timetable.css' %}" rel="stylesheet">
+
+    <!--Color Themes-->
+    <link id="theme-color-file" href="{% static 'main_app/css/color-themes/tealblue.css' %}" rel="stylesheet">
+
+    <link rel="shortcut icon" href="{% static 'main_app/images/favicon.png' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'main_app/images/favicon.png' %}" type="image/x-icon">
+
+    <script src="https://use.fontawesome.com/4f74105f2c.js"></script>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <!-- Preloader -->
+    <div class="preloader"></div>
+    
+    <!-- Main Header-->
+    <header class="main-header header-style-two">
+
+        {% if messages %}
+
+          <div class="messages" style="text-align: center !important;">
+            {% for msg in messages %}
+
+            <div class="alert alert-{{msg.level_tag}}" role="alert">
+              {{msg.message}}
+            </div>
+
+            {% endfor %}
+          </div>
+
+        {% endif %}
+
+        {% for data in companyDetails %}
+
+            <!-- Header top -->
+            <div class="header-top-two">
+                <div class="auto-container">
+                    <div class="inner-container">
+                        <div class="top-left">
+                            <ul class="contact-list clearfix">
+                                <li><i class="flaticon-hospital-1"></i>{{data.address}}, {{data.town.town_name}}, {{data.country.country_name}} </li>
+                                <li><i class="flaticon-call-1"></i>{{data.tel1}}</li>
+                                <!-- flaticon-back-in-time -->
+                            </ul>
+                        </div>
+                        <div class="top-right">
+                            <ul class="social-icon-one">
+                                <li><a class="facebook-icon" href="{{data.facebook_profile_link}}" target="_blank"><span class="fa fa-facebook"></span></a></li>
+                                <li><a class="twitter-icon" href="{{data.twitter_profile_link}}" target="_blank"><span class="fab fa-twitter"></span></a></li>
+                                <!-- <li><a href="{{data.facebook_profile_link}}"><span class="fab fa-skype"></span></a></li> -->
+                                <li><a class="linkedin-icon" href="{{data.linkedin_profile_link}}" target="_blank"><span class="fab fa-linkedin-in"></span></a></li>
+                            </ul>
+                            <div class="btn-box">
+                                <a href="{% url 'mainAppNamespace:RequestForAppointmentName' %}" class="theme-btn btn-style-three"><span class="btn-title"><i class="fa fa-calendar-plus-o"></i> &nbsp; Rendez-vous</span></a> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Header Top -->
+
+        {% endfor %}
+        
+        <!-- Header Lower -->
+        <div class="header-lower">
+            <div class="auto-container">    
+                <!-- Main box -->
+                <div class="main-box">
+
+                    <div class="logo-box">
+                        <div class="logo"><a href="{% url 'mainAppNamespace:HomeName' %}"><img src="{% static 'main_app/images/logo-3.png' %}" alt="" title=""></a></div>
+                    </div>
+
+                    <!--Nav Box-->
+                    <div class="nav-outer">
+                        <nav class="nav main-menu">
+                            <ul class="navigation" id="navbar">
+
+                                <li class="{{onHomePage}}"><a href="{% url 'mainAppNamespace:HomeName' %}">Accueil</a></li>
+
+                                <li class="{{onAboutUsPage}} dropdown">
+                                    <span>Organisation</span>
+                                    <ul>
+                                        <li><a href="{% url 'mainAppNamespace:AboutUsName' %}">Présentation</a></li>
+                                        <li><a href="{% url 'mainAppNamespace:HistoriqueName' %}">Historique</a></li>
+                                        <li><a href="{% url 'mainAppNamespace:DirectionsName' %}">Directions</a></li>
+                                        <li><a href="{% url 'mainAppNamespace:ProjectsName' %}">Orientation & Projets</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="{{onServicePage}} dropdown">
+                                    <span>Services</span>
+                                    <ul>
+                                        {% for service in ourServicesList %}
+                                            <li><a href="{% url 'mainAppNamespace:ServiceName' service.slug %}">{{service.title}}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+
+                                <li class="{{onDoctorsPage}} dropdown">
+                                    <span>Médecins</span>
+                                    <ul>
+                                        <li><a href="{% url 'mainAppNamespace:TimetableName' %}">Plage Horaires</a></li>
+                                        <li><a href="{% url 'mainAppNamespace:OurTeamName' %}?doctor=true">Liste des Médecins</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="{{onPatientSpacePage}} dropdown">
+                                    <span>Patients</span>
+                                    <ul>
+                                        <li><a href="{% url 'mainAppNamespace:PrepareAdmissionName' %}">Préparer Votre Séjour</a></li>
+                                        <li><a href="{% url 'mainAppNamespace:DailyLifeName' %}">Vie Quotidienne</a></li>
+                                        <li><a href="{% url 'mainAppNamespace:RightsAndDutiesName' %}">Droits & Devoir</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="{{onMediaPage}} dropdown">
+                                    <span>Média</span>
+                                    <ul>
+                                        {% for category in newsCategoriesList %}
+                                            <li><a href="{% url 'mainAppNamespace:MediaName' category.slug %}">{{category.category}} </a></li>
+                                        {% endfor %}
+                                        <li><a href="{% url 'mainAppNamespace:OurGalleryName' %}">Gallerie </a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="{{onContactPage}}"><a href="{% url 'mainAppNamespace:ContactName' %}">Contact</a></li>
+
+                                <li class="dropdown">
+                                    <span class="emergency-button">Covid-19</span>
+                                    <ul>
+                                        <li><a href="{% url 'mainAppNamespace:Covid19Name' %}"> Covid-19 </a></li>
+                                        <li><a href="{% url 'mainAppNamespace:Covid19GovernmentInformationName' %}"> Informations Officielles </a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!-- Main Menu End-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sticky Header  -->
+        <div class="sticky-header">
+            <div class="auto-container">            
+                <div class="main-box">
+                    <div class="logo-box">
+                        <div class="logo"><a href="{% url 'mainAppNamespace:HomeName' %}"><img src="{% static 'main_app/images/logo-4.png' %}" alt="" title=""></a></div>
+                    </div>
+
+                    <!--Keep This Empty / Menu will come through Javascript-->
+                </div>
+            </div>
+        </div><!-- End Sticky Menu -->
+
+        <!-- Mobile Header -->
+        <div class="mobile-header">
+            <div class="logo"><a href="{% url 'mainAppNamespace:HomeName' %}"><img src="{% static 'main_app/images/logo-4.png' %}" alt="" title=""></a></div>
+
+            <!--Nav Box-->
+            <div class="nav-outer clearfix">
+
+                <div class="outer-box">
+                    <!-- Search Btn -->
+                    <!-- <div class="search-box">
+                        <button class="search-btn mobile-search-btn"><i class="flaticon-magnifying-glass"></i></button>
+                    </div> -->
+
+                    <!-- Cart Btn -->
+                    <!-- <button class="cart-btn"><i class="icon flaticon-shopping-cart"></i><span class="count">3</span></button> -->
+
+                    <a href="#nav-mobile" class="mobile-nav-toggler navbar-trigger"><span class="fa fa-bars"></span></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Nav -->
+        <div id="nav-mobile"></div>
+
+        <!-- Header Search -->
+        <div class="search-popup">
+            <span class="search-back-drop"></span>
+            <button class="close-search"><span class="fa fa-times"></span></button>
+            
+            <div class="search-inner">
+                <form method="post" action="">
+                    <div class="form-group">
+                        <input type="search" name="search-field" value="" placeholder="Search..." required="">
+                        <button type="submit"><i class="flaticon-magnifying-glass"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- End Header Search -->
+
+    </header>
+    <!--End Main Header -->
+
+    {% block content %}
+
+    {% endblock %}
+
+    {% for data in companyDetails %}
+
+        <!-- Main Footer -->
+        <footer class="main-footer style-two">
+            <!--Widgets Section-->
+            <div class="widgets-section" style="background-image: url({% static 'main_app/images/background/7.jpg' %});">
+                <div class="auto-container">
+                    <div class="row">
+                        <!--Big Column-->
+                        <div class="big-column col-xl-6 col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <!--Footer Column-->
+                                <div class="footer-column col-xl-7 col-lg-6 col-md-6 col-sm-12">
+                                    <div class="footer-widget about-widget">
+                                        <div class="logo footer-logo">
+                                            <a href="{% url 'mainAppNamespace:HomeName' %}"><img src="{% static 'main_app/images/logo-2.png' %}" alt="" /></a>
+                                        </div>
+                                        <div class="text">
+                                            <p>{{data.mission}}</p>
+                                        </div>
+                                        <ul class="social-icon-three">
+                                            <li><a href="{{data.facebook_profile_link}}" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                            <li><a href="{{data.twitter_profile_link}}" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                                            <li><a href="{{data.linkedin_profile_link}}" target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
+                                        </ul>
+
+                                        <!-- Newslatters-->
+                                        <div style="margin-top: 40px;">
+                                            <h3 style="font-size: 20px; color: #fff;">Newsletter</h3>
+                                            <p style="font-size: 14px; line-height: 30px; color: #ffffff; font-weight: 400; margin-top: 15px; margin-bottom: 15px;">Entrez votre adresse emai pour vous abonner à notre bulletin d'information.</p>
+                                            <form method="post" action="{% url 'mainAppNamespace:NewsletterRegistrationName' %}">
+                                                {% csrf_token %}
+                                                <input type="email" name="newsletterEmail" placeholder="Votre addresse email ..." required="" style="border: 1px solid #fff; font-size: 14px; line-height: 30px; padding: 5px 10px; height: 52px; color: #222222; background: #fff; width: 60%; float: left;">
+                                                <button type="submit" style="font-size: 16px; height: 52px; line-height: 30px; color: #ffffff; padding: 10px 30px; font-weight: 600; background: #222222; width: 40%; float: right;">S'inscrire</button>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!--Footer Column-->
+                                <div class="footer-column col-xl-5 col-lg-6 col-md-6 col-sm-12">
+                                    <div class="footer-widget">
+                                        <h2 class="widget-title">Services</h2>
+                                        <ul class="user-links">
+                                            {% for service in ourServicesList %}
+                                                <li><a href="{% url 'mainAppNamespace:ServiceName' service.slug %}">{{service.title}}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Big Column-->
+                        <div class="big-column col-xl-6 col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <!--Footer Column-->
+                                <div class="footer-column col-lg-6 col-md-6 col-sm-12">
+                                    <!--Footer Column-->
+                                    <div class="footer-widget recent-posts">
+                                        <h2 class="widget-title">Actualités</h2>
+                                         <!--Footer Column-->
+                                        <div class="widget-content">
+
+                                            {% for news in ourNewsList %}
+
+                                                <div class="post">
+                                                    <div class="thumb"><a href="{% url 'mainAppNamespace:ArticleName' news.slug %}"><img src="{{news.image.url}}" alt=""></a></div>
+                                                    <h4><a href="{% url 'mainAppNamespace:ArticleName' news.slug %}">{{news.title}}</a></h4>
+                                                    <span class="date">{{news.posted_on_date_time}}</span>
+                                                </div>
+
+                                            {% endfor %}
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Footer Column-->
+                                <div class="footer-column col-lg-6 col-md-6 col-sm-12">
+                                    <!--Footer Column-->
+                                    <div class="footer-widget contact-widget">
+                                        <h2 class="widget-title">Contact </h2>
+                                         <!--Footer Column-->
+                                        <div class="widget-content">
+                                            <ul class="contact-list">
+                                                <li>
+                                                    <span class="icon flaticon-placeholder"></span>
+                                                    <div class="text">{{data.address}}, {{data.town.town_name}}, {{data.country.country_name}}</div>
+                                                </li>
+
+                                                <li>
+                                                    <span class="icon flaticon-call-1"></span>
+                                                    <div class="text">Lun to Dim : 08:30 - 18:00</div>
+                                                    <a href="tel:{{data.tel1}}"><strong>{{data.tel1}}</strong></a>
+                                                </li>
+
+                                                <li>
+                                                    <span class="icon flaticon-email"></span>
+                                                    <div class="text">Avez-vous de question?<br>
+                                                    <a href="mailto:{{data.email}}"><strong>{{data.email}}</strong></a></div>
+                                                </li>
+
+                                                <li>
+                                                    <span class="icon flaticon-back-in-time"></span>
+                                                    <div class="text">
+                                                        Lundi - Vendredi 8.00 - 7:00 pm<br/>
+                                                        Samedi 9.00 - 10:00 pm<br/>
+                                                        Dimanche 10.00 - 12:00 pm<br/>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Footer Bottom-->
+            <div class="footer-bottom">
+                <!-- Scroll To Top -->
+                <div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-angle-up"></span></div>
+                
+                <div class="auto-container">
+                    <div class="inner-container clearfix">
+                        <div class="footer-nav">
+                            <ul class="clearfix">
+                               <li><a href="{% url 'mainAppNamespace:PrivacyPolicyName' %}">Confidentialité</a></li> 
+                               <li><a href="{% url 'mainAppNamespace:OurPartnersName' %}?partner_area=pharmacy">Pharmacies</a></li> 
+                               <!-- <li><a href="services.html">Contact</a></li> -->
+                               <li><a href="{% url 'mainAppNamespace:HomeName' %}">Accueil</a></li>  
+                            </ul>
+                        </div>
+                        
+                        <div class="copyright-text">
+                            <p>Développé par <a href="https://bakuritechnologies.com" target="_blank">Bakuri Technologies</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!--End Main Footer -->
+
+    {% endfor %}
+
+</div><!-- End Page Wrapper -->
+
+<script src="{% static 'main_app/js/jquery.js' %}"></script>  
+<script src="{% static 'main_app/js/popper.min.js' %}"></script>
+<script src="{% static 'main_app/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'main_app/js/jquery.fancybox.js' %}"></script>
+<script src="{% static 'main_app/js/jquery.modal.min.js' %}"></script>
+<script src="{% static 'main_app/js/mmenu.polyfills.js' %}"></script>
+<script src="{% static 'main_app/js/mmenu.js' %}"></script>
+<script src="{% static 'main_app/js/appear.js' %}"></script>
+<script src="{% static 'main_app/js/mixitup.js' %}"></script>
+<script src="{% static 'main_app/js/owl.js' %}"></script>
+<script src="{% static 'main_app/js/wow.js' %}"></script>
+<script src="{% static 'main_app/js/script.js' %}"></script>
+</body>
+
+</html>
+

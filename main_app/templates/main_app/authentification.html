@@ -1,0 +1,145 @@
+{% extends 'main_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+	{% for data in companyDetails %}
+
+       <!--Page Title-->
+       <section class="page-title" style="background-image: url({% static 'main_app/images/background/8.jpg' %});">
+           <div class="auto-container">
+               <div class="title-outer">            
+                   <h1>Authentification</h1>
+                   <ul class="page-breadcrumb">
+                       <li><a href="{% url 'mainAppNamespace:HomeName' %}">Accueil</a></li>
+                       <li>Authentification</li>
+                   </ul>
+               </div>
+           </div>
+       </section>
+       <!--End Page Title-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       <!-- Appointment Section Two -->
+	    <section class="appointment-section-two" style="background-image: url(images/background/7.jpg);">
+	        <div class="outer-box">
+	            <div class="auto-container">
+	                <div class="row">
+	                    <!-- Testimonial Column -->
+	                    <div class="testimonial-column col-lg-6 col-md-12 col-sm-12">
+	                        <div class="inner-column">
+	                        	<div class="default-form" style="border: 2px dashed #fff; padding: 30px; border-radius: 10px;">
+	                            <!-- Sec Title -->
+	                            <div class="sec-title light">
+	                                <!-- <span class="title">OUR BLOG</span> -->
+	                                <h2>Connexion</h2>
+	                                <span class="divider"></span>
+	                            </div>
+
+	                            <!--Login Form-->
+	                            <form action="{% url 'mainAppNamespace:LoginName' %}" method="post" class="login-box">
+	                            	{% csrf_token %}
+
+	                            	<div class="form-group">
+	                                    <input type="text" name="username" placeholder="Nom d'utilisateur" required="">
+	                                </div>
+
+	                                <div class="form-group">
+	                                    <input type="password" name="password" placeholder="Mot de passe" required="">
+	                                </div>
+
+	                                <div class="form-group">
+	                                    <button class="theme-btn btn-style-one" type="submit" style="font-size: 18px !important; background-color: #fff !important; color: #0a53a0 !important;"><span class="btn-title">Se Connecter</span></button>
+	                                </div>
+	                            </form>
+	                        </div>
+
+	                        </div>
+	                    </div>
+
+	                    <!-- Form Column -->
+	                    <div class="form-column col-lg-6 col-md-12 col-sm-12">
+	                        <div class="inner-column">
+	                            <div class="appointment-form default-form">
+	                                <div class="sec-title"> 
+	                                    <!-- <span class="sub-title">Online Appoinment</span> -->
+	                                    <h2>Créer un compte</h2>
+	                                    <span class="divider"></span>
+	                                </div>
+
+	                                <!--Register Form-->
+	                                <form action="{% url 'mainAppNamespace:RegisterName' %}" method="post">
+	                                    {% csrf_token %}
+
+	                                    <div class="form-group">
+	                                        <input type="text" name="first_name" placeholder="Votre Nom *" required="">
+	                                    </div>
+
+	                                    <div class="form-group">
+	                                        <input type="text" name="last_name" placeholder="Votre Nom *" required="">
+	                                    </div>
+
+	                                    <div class="form-group">
+	                                        <input type="text" name="email" placeholder="Votre Addresse Email *" required="">
+	                                    </div>
+
+	                                    <div class="form-group">
+	                                        <input type="text" name="tel" placeholder="Votre Téléphone">
+	                                    </div>
+
+	                                    <div class="form-group">
+	                                        <input type="password" name="password" placeholder="Mot de passe *" required="">
+	                                    </div>
+
+	                                    <div class="form-group">
+	                                        <input type="password" name="password_confirmation" placeholder="Confirmez le mot de passe *" required="">
+	                                    </div>
+	                                    
+	                                    <div class="form-group">
+	                                        <button class="theme-btn btn-style-one bg-dodgerblue" type="submit"><span class="btn-title">S'inscrire</span></button>
+	                                    </div>
+	                                </form>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </section>
+	    <!-- End Appointment Section Two -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
+
+	{% endfor %}
+
+{% endblock %}

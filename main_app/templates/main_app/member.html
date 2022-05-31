@@ -1,0 +1,102 @@
+{% extends 'main_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+	{% for data in companyDetails %}
+
+        {% for user in requestedUser %}
+
+           <!--Page Title-->
+           <section class="page-title" style="background-image: url({% static 'main_app/images/background/8.jpg' %});">
+               <div class="auto-container">
+                   <div class="title-outer">            
+                       <h1>Membre</h1>
+                       <ul class="page-breadcrumb">
+                           <li><a href="{% url 'mainAppNamespace:HomeName' %}">Accueil</a></li>
+                           <li><a href="{% url 'mainAppNamespace:OurTeamName' %}">Utilisateurs</a></li>
+                           <li>{{user.first_name}} {{user.last_name}}</li>
+                       </ul>
+                   </div>
+               </div>
+           </section>
+           <!--End Page Title-->
+
+           <!-- Doctor Detail Section -->
+            <section class="doctor-detail-section">
+                <div class="auto-container">
+                    <div class="row">
+                        <!-- Content Side -->
+                        <div class="content-side col-lg-8 col-md-12 col-sm-12 order-2">
+                            <div class="docter-detail">
+                                <h3 class="name">{{user.first_name}} {{user.last_name}}</h3>
+                                <span class="designation">{{user.profession}}</span>
+                                <div class="text">{{user.brief_bio | safe}}</div> 
+                                
+                                <!-- <ul class="doctor-info-list">
+                                    <li>
+                                        <strong>Timing</strong>
+                                        <p>Monday - Friday 08:00 - 20:00 <br> Saturday&nbsp; 09:00 - 18:00 <br> Sunday &nbsp; &nbsp; 09:00 - 18:00</p>
+                                    </li>
+                                    <li>
+                                        <strong>Phone</strong>
+                                        <p><a href="#">+1-23-345-6789</a></p>
+                                    </li>
+                                </ul> -->
+
+                            </div>
+
+                        </div>
+
+                        <!-- Sidebar Side -->
+                        <div class="sidebar-side col-lg-4 col-md-12 col-sm-12">
+                            <div class="sidebar"> 
+                                <!-- Team Block -->
+                                <div class="team-block wow fadeInUp">
+                                    <div class="inner-box">
+                                        <figure class="image">
+                                            {% if user.profile_image %}
+                                                <img src="{{user.profile_image.url}}" alt="">
+                                            {% else %}
+                                                <img src="{% static 'main_app/images/user.png' %}" alt="">
+                                            {% endif %}
+                                        </figure>
+                                        <ul class="social-links">
+                                            <li><a href="{{user.facebook_profile_link}}" target="_blank"><span class="fa fa-facebook"></span></a></li>
+                                            <li><a href="{{user.twitter_profile_link}}" target="_blank"><span class="fab fa-twitter"></span></a></li>
+                                            <!-- <li><a href="{{user.last_name}}"><span class="fab fa-instagram"></span></a></li> -->
+                                            <li><a href="{{user.linkedin_profile_link}}" target="_blank"><span class="fab fa-linkedin-in"></span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Doctor Availability -->
+                                <!-- <div class="docter-availability">
+                                    <div class="inner">
+                                        <div class="sec-title">
+                                            <span class="sub-title">Timining</span>
+                                            <h2>Disponibilité</h2>
+                                            <span class="divider"></span>
+                                            <div class="text">Suspendisse potenti. Maecenas dapibus ac tellus sed pulvinar. Vestibulum bib volutpat accumsan non laoreet nulla luctus.</div>
+                                        </div>
+                                        <ul class="timing-list-two">
+                                            <li>Monday - Friday <span>08:00 - 20:00</span></li>
+                                            <li>Saturday <span>09:00 - 18:00</span></li>
+                                            <li>Sunday  <span>09:00 - 18:00</span></li>
+                                        </ul>
+                                    </div>
+                                </div> -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- End Doctor Detail Section -->
+
+        {% endfor %}
+
+	{% endfor %}
+
+{% endblock %}

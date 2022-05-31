@@ -1,0 +1,54 @@
+{% extends 'main_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+	{% for data in companyDetails %}
+
+        {% for project in requestedProject %}
+
+           <!--Page Title-->
+           <section class="page-title" style="background-image: url({% static 'main_app/images/background/8.jpg' %});">
+               <div class="auto-container">
+                   <div class="title-outer">            
+                       <h1>Projet</h1>
+                       <ul class="page-breadcrumb">
+                           <li><a href="{% url 'mainAppNamespace:HomeName' %}">Accueil</a></li>
+                           <li><a href="{% url 'mainAppNamespace:ProjectsName' %}">Projets</a></li>
+                           <li>{{project.title}}</li>
+                       </ul>
+                   </div>
+               </div>
+           </section>
+           <!--End Page Title-->
+
+           <!-- Skill Section -->
+           <section class="skill-section">
+               <div class="outer-container clearfix">
+                   <div class="skill-column">
+                       <div class="inner-column">
+                           <div class="sec-title">
+                               <!-- <span class="sub-title">PRESENTATION</span> -->
+                               <h2> {{project.title}} </h2>
+                               <span class="divider"></span>
+                               <div class="text">
+                                  {{project.description | safe}}
+                               </div>
+                           </div>
+
+                       </div>
+                   </div>
+
+                   <div class="image-column">
+                      <img src="{{project.image.url}}" alt="">
+                   </div>
+               </div>
+           </section>
+           <!--End Skill Section -->
+
+        {% endfor %}
+
+	{% endfor %}
+
+{% endblock %}

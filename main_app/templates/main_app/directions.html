@@ -1,0 +1,53 @@
+{% extends 'main_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+	{% for data in companyDetails %}
+
+       <!--Page Title-->
+       <section class="page-title" style="background-image: url({% static 'main_app/images/background/8.jpg' %});">
+           <div class="auto-container">
+               <div class="title-outer">            
+                   <h1>Nos Directions</h1>
+                   <ul class="page-breadcrumb">
+                       <li><a href="{% url 'mainAppNamespace:HomeName' %}">Accueil</a></li>
+                       <li>Directions</li>
+                   </ul>
+               </div>
+           </div>
+       </section>
+       <!-- End Page Title -->
+
+       <!-- Services Section -->
+    <section class="services-section">
+        <div class="auto-container">
+            <div class="row">
+
+                {% for direction in ourDirections %}
+
+                    <!-- Service Block -->
+                    <div class="service-block col-lg-4 col-md-6 col-sm-12" style="padding-right: 10px !important;padding-left: 10px !important;">
+                        <div class="inner-box">
+                            <span class="{{direction.fontawesome_icon}}"></span>
+                            <h5><a href="{% url 'mainAppNamespace:DirectionName' direction.slug %}">{{direction.name}}</a></h5>
+                            <div class="text">
+                                {{direction.description | safe | truncatechars:150}}
+                                <div class="btn-box" style="margin-top: 25px;">
+                                    <a href="{% url 'mainAppNamespace:DirectionName' direction.slug %}" class="theme-btn btn-style-three"><span class="btn-title">Lire Plus</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+    <!--End Services Section -->
+
+	{% endfor %}
+
+{% endblock %}

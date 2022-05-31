@@ -1,0 +1,89 @@
+{% extends 'main_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+	{% for data in companyDetails %}
+
+       <!--Page Title-->
+       <section class="page-title" style="background-image: url({% static 'main_app/images/background/8.jpg' %});">
+           <div class="auto-container">
+               <div class="title-outer">            
+                   <h1>{{pageTitle}}</h1>
+                   <ul class="page-breadcrumb">
+                       <li><a href="{% url 'mainAppNamespace:HomeName' %}">Accueil</a></li>
+                       <li>Nos Partenaires</li>
+                   </ul>
+               </div>
+           </div>
+       </section>
+       <!--End Page Title-->
+
+       <!-- Services Section -->
+        <section class="services-section-two">
+            <div class="auto-container">
+
+                <div class="carousel-outer">
+                    <div class="row">
+
+                        {% for partner in ourPartnersList %}
+
+                            <!-- service Block -->
+                            <div class="service-block-two col-lg-4 col-md-6 col-sm-12">
+                                <div class="inner-box">
+                                    <div class="image-box">
+                                        <figure class="image"><a href="#"><img src="{{partner.company_logo.url}}" alt=""></a></figure>
+                                    </div>
+                                    <div class="lower-content">
+                                        <div class="title-box">
+                                            <span class="icon flaticon-heart-2"></span>
+                                            <h4><a href="#">{{partner.company_name}}</a></h4> 
+                                        </div>
+                                        <div class="text" style="padding-bottom: 20px !important; padding-left: 15px !important;">
+                                            <p>{{partner.tel1}}</p>
+                                            <p>{{partner.address}}, {{partner.town.town_name}}, {{partner.country.country_name}}</p>
+                                        </div>
+                                        <span class="icon-right flaticon-heart-2"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                    {% if ourPartnersList.has_other_pages %}
+
+                        <!--Styled Pagination-->
+                        <ul class="styled-pagination" style="margin-bottom: 20px !important;">
+
+                            {% if ourPartnersList.has_previous %}
+                                <li><a href="?page={{ ourPartnersList.previous_page_number }}" class="arrow"><span class="flaticon-left"></span></a></li>
+                            {% endif %}
+
+                            {% for i in ourPartnersList.paginator.page_range %}
+                              {% if ourPartnersList.number == i %}
+                                <li><a href="#" class="active">{{ i }}</a></li>
+                              {% else %}
+                                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                              {% endif %}
+                            {% endfor %}                            
+                            
+                            {% if ourPartnersList.has_next %}
+                                <li><a href="?page={{ ourPartnersList.next_page_number }}" class="arrow"><span class="flaticon-right"></span></a></li>
+                            {% endif %}
+
+                        </ul>                
+                        <!--End Styled Pagination-->
+
+                    {% endif %}
+
+                </div>
+            </div>
+        </section>
+        <!-- End service Section -->
+
+	{% endfor %}
+
+{% endblock %}

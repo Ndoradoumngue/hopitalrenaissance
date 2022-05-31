@@ -1,0 +1,93 @@
+{% extends 'main_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+	{% for data in companyDetails %}
+
+        <!--Page Title-->
+        <section class="page-title" style="background-image: url({% static 'main_app/images/background/8.jpg' %});">
+            <div class="auto-container">
+                <div class="title-outer">            
+                    <h1>Plage Horaires</h1>
+                    <ul class="page-breadcrumb">
+                        <li><a href="{% url 'mainAppNamespace:HomeName' %}">Accueil</a></li>
+                        <li>Plage Horaires</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!--End Page Title-->
+
+        <!-- Time Table Section -->
+        <section class="time-table-section">
+            <div class="auto-container">
+                <div class="table-outer">
+                    <!-- Doctors Time Table -->
+                    <table class="doctors-time-table">
+                        <thead>
+                            <tr> 
+                                <th class="dark">Heure</th>
+
+                                {% for day in daysOfTheWeek %}
+                                    <th>{{day.day}}</th>
+                                {% endfor %}
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for hour in workingHours %}
+
+                                <!-- Table Row -->
+                                <tr>
+                                    <th>{{hour.hour}}</th>
+
+                                    {% for task in ourTimetable %}
+
+                                        {% if task.hour.slug == hour.slug %}
+
+                                            {% if task.task %}
+
+                                                <td>
+                                                    <strong>{{task.task}}</strong>
+                                                    <p> {{task.doctors}} </p>
+                                                    <div class="doctor-info">
+                                                        <figure class="thumb"><img src="images/resource/doctor-thumb.jpg" alt=""></figure>
+                                                        <h4 class="name">{{task.doctors}}</h4>
+                                                        <a href="#" class="theme-btn btn-style-one"><span class="btn-title">Appointment</span></a>
+                                                    </div>
+                                                </td>
+
+                                            {% else %}
+
+                                                {% if task.is_break_time == true or task.is_break_time == True or task.is_break_time == 'true' or task.is_break_time == 'True' %}
+                                                    <td class="empty">
+                                                        <span style="color: #222222 !important; font-size: 16px !important; font-weight: 700 !important; font-family: 'Titillium Web', sans-serif !important;">PAUSE</span>
+                                                    </td>
+                                                {% else %}
+                                                    <td class="empty"></td>
+                                                {% endif %}
+
+                                            {% endif %}
+
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>      
+        </section>
+        <!-- End Time Table Section -->
+        
+	{% endfor %}
+
+{% endblock %}
